@@ -31,12 +31,13 @@ with st.sidebar:
 
 def analyze_with_self_healing(api_key, image, prompt):
     client = genai.Client(api_key=api_key)
-    backup_models = ["gemini-2.5-flash", "gemini-2.5-pro", "gemini-2.0-flash"]
+    backup_models = ("gemini-2.5-flash", "gemini-2.5-pro", "gemini-2.0-flash")
+    payload = list((image, prompt))
     last_error = ""
     for model_name in backup_models:
         for attempt in range(2):
             try:
-                response = client.models.generate_content(model=model_name, contents=)
+                response = client.models.generate_content(model=model_name, contents=payload)
                 if response and response.text:
                     return response.text, model_name
             except Exception as e:
@@ -46,7 +47,7 @@ def analyze_with_self_healing(api_key, image, prompt):
                 time.sleep(1.5)
     raise Exception(f"सभी बैकअप सिस्टम व्यस्त हैं। कृपया थोड़ी देर बाद प्रयास करें। ({last_error})")
 
-uploaded_file = st.file_uploader("यहाँ डॉक्टर के पर्चे या अस्पताल के बिल की फोटो अपलोड करें", type=["jpg", "jpeg", "png"])
+uploaded_file = st.file_uploader("यहाँ डॉक्टर के पर्चे या अस्पताल के बिल की फोटो अपलोड करें", type=("jpg", "jpeg", "png"))
 
 if uploaded_file is not None:
     try:
