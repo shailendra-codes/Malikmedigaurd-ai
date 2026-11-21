@@ -27,7 +27,7 @@ if up is not None:
                     small_img.thumbnail((1024, 1024))
                     client = genai.Client(api_key=api_key)
                     prompt = "आप एक भारतीय मेडिकल बिल और जेनेरिक दवा विशेषज्ञ हैं। इस फोटो को पढ़कर सरल हिंदी में 4 पॉइंट्स में रिपोर्ट दें: 1. दवा या पर्चे का सार, 2. सस्ते जेनेरिक (जन औषधि) विकल्प और बचत, 3. बिल/रेट की जांच, 4. आयुष्मान भारत या सरकारी योजना की मदद। अंत में डॉक्टर से सलाह लेने की चेतावनी लिखें।"
-                    res = client.models.generate_content(model="gemini-2.5-flash", contents=list((small_img, prompt)))
+                    res = client.models.generate_content(model="gemini-3.8-flash", contents=list((small_img, prompt)))
                     st.success("✅ विश्लेषण पूरा हुआ!")
                     st.markdown(res.text)
                 except Exception as e:
