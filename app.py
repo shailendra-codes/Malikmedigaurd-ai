@@ -21,7 +21,8 @@ with st.expander("📋 यह टूल किन-किन डॉक्टर�
     * 🌿 **आयुर्वेदिक (Ayurveda) और होम्योपैथिक (Homeopathy)** डॉक्टरों के पर्चे।
     * 🧾 **पैथोलॉजी लैब रिपोर्ट और अस्पताल के डिस्चार्ज बिल।**
     """)
-    with st.sidebar:
+
+with st.sidebar:
     st.header("⚙️ सेटिंग्स")
     api_key = st.text_input("अपनी Gemini API Key डालें:", type="password")
     st.info("यह टूल दवाइयों के सस्ते जेनेरिक विकल्प और सरकारी योजनाओं की जानकारी देता है।")
