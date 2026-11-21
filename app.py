@@ -6,7 +6,7 @@ from PIL import Image
 st.set_page_config(page_title="Malik MediGuard AI - सही इलाज और बचत", page_icon="🏥")
 st.title("🏥 Malik MediGuard AI")
 st.subheader("डॉक्टर के पर्चे और मेडिकल बिल की असली जांच करें")
-st.caption("Created & Conceptualized by: **Shailendra Kumar Singh** | 🛡️ Self-Healing AI System")
+st.caption("Created & Conceptualized by: **Shailendra Kumar Singh** | 🛡️ Auto-Healing AI System")
 
 with st.expander("📋 यह टूल किन-किन डॉक्टरों के पर्चे और बिल पढ़ सकता है? (यहाँ क्लिक करें)", expanded=True):
     st.markdown("""
@@ -21,8 +21,7 @@ with st.expander("📋 यह टूल किन-किन डॉक्टर�
     * 🌿 **आयुर्वेदिक (Ayurveda) और होम्योपैथिक (Homeopathy)** डॉक्टरों के पर्चे।
     * 🧾 **पैथोलॉजी लैब रिपोर्ट और अस्पताल के डिस्चार्ज बिल।**
     """)
-
-with st.sidebar:
+    with st.sidebar:
     st.header("⚙️ सेटिंग्स")
     api_key = st.text_input("अपनी Gemini API Key डालें:", type="password")
     st.info("यह टूल दवाइयों के सस्ते जेनेरिक विकल्प और सरकारी योजनाओं की जानकारी देता है।")
@@ -31,10 +30,20 @@ with st.sidebar:
 
 def analyze_with_self_healing(api_key, image, prompt):
     client = genai.Client(api_key=api_key)
-    backup_models = ("gemini-2.5-flash", "gemini-2.5-pro", "gemini-2.0-flash")
     payload = list((image, prompt))
+   
+    # पहले लेटेस्ट 3.8 मॉडल्स, और फिर अपने आप उपलब्ध मॉडल्स की लिस्ट निकालेगा
+    candidate_models = list(("gemini-3.8-flash", "gemini-3.8-pro", "gemini-3.5-flash", "gemini-3.0-flash"))
+    try:
+        for m in client.models.list():
+            m_name = m.name.replace("models/", "")
+            if "gemini" in m_name and "flash" in m_name and m_name not in candidate_models:
+                candidate_models.append(m_name)
+    except Exception:
+        pass
+
     last_error = ""
-    for model_name in backup_models:
+    for model_name in candidate_models:
         for attempt in range(2):
             try:
                 response = client.models.generate_content(model=model_name, contents=payload)
@@ -44,7 +53,10 @@ def analyze_with_self_healing(api_key, image, prompt):
                 last_error = str(e)
                 if "API_KEY_INVALID" in last_error or "403" in last_error:
                     raise Exception("आपकी Gemini API Key गलत है या एक्सपायर हो गई है। कृपया नई Key डालें।")
-                time.sleep(1.5)
+                if "404" in last_error or "NOT_FOUND" in last_error:
+                    break  # पुराना मॉडल छोड़कर तुरंत अगले मॉडल पर जाए
+                time.sleep(1)
+               
     raise Exception(f"सभी बैकअप सिस्टम व्यस्त हैं। कृपया थोड़ी देर बाद प्रयास करें। ({last_error})")
 
 uploaded_file = st.file_uploader("यहाँ डॉक्टर के पर्चे या अस्पताल के बिल की फोटो अपलोड करें", type=("jpg", "jpeg", "png"))
