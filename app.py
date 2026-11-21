@@ -1,4 +1,38 @@
-import base64
-code = "aW1wb3J0IHN0cmVhbWxpdCBhcyBzdApmcm9tIGdvb2dsZSBpbXBvcnQgZ2VuYWkKZnJvbSBQSUwgaW1wb3J0IEltYWdlCgpzdC5zZXRfcGFnZV9jb25maWcocGFnZV90aXRsZT0iTWFsaWsgTWVkaUd1YXJkIEFJIiwgcGFnZV9pY29uPSLwn4+lIikKc3QudGl0bGUoIvCfj6UgTWFsaWsgTWVkaUd1YXJkIEFJIikKc3Quc3ViaGVhZGVyKCLgpKHgpYngpJXgpY3gpJ/gpLAg4KSV4KWHIOCkquCksOCljeCkmuClhyDgpJTgpLAg4KSu4KWH4KSh4KS/4KSV4KSyIOCkrOCkv+CksiDgpJXgpYAg4KSF4KS44KSy4KWAIOCknOCkvuCkguCkmiDgpJXgpLDgpYfgpIIiKQpzdC5jYXB0aW9uKCJDcmVhdGVkIGJ5OiAqKlNoYWlsZW5kcmEgS3VtYXIgU2luZ2gqKiB8IPCfm6HvuI8gU3VwZXJmYXN0IEFJIikKCndpdGggc3QuZXhwYW5kZXIoIvCfk4sg4KSv4KS5IOCkn+ClguCksiDgpJXgpL/gpKgt4KSV4KS/4KSoIOCkoeClieCkleCljeCkn+CksOCli+CkgiDgpJXgpYcg4KSq4KSw4KWN4KSa4KWHIOCkquCksuCkvCDgpLjgpJXgpKTgpL4g4KS54KWIPyIsIGV4cGFuZGVkPVRydWUpOgogICAgc3QubWFya2Rvd24oIiog8J+puiDgpJzgpKjgpLDgpLIg4KSr4KS/4KSc4KS/4KS24KS/4KSv4KSoIChHZW5lcmFsIFBoeXNpY2lhbikKKiDinaTvuI8g4KS54KWD4KSm4KSvIOCksOCli+CklSDgpLXgpL/gpLbgpYfgpLfgpJzgpY3gpJ8gKENhcmRpb2xvZ2lzdCkKKiDwn6a0IOCkuOCh4KWN4KSh4KWAIChPcnRob3BlZGljKSwg4KSs4KS+4KSyIChQZWRpYXRyaWNpYW4pLCBTa2luLCBEZW50YWwsIEVOVAoqIPCfjL8g4KSG4KSv4KWB4KSw4KWN4KS14KWH4KSm4KS/4KSVIOCklOCksCDgpLjgpYvgpK7gpY3gpK/gpYvgpKrgpYjgpKTgpL/gpJUgKEF5dXJ2ZWRhICYgSG9tZW9wYXRoeSkKKiDwn6e+IOCksuCliOCkrCDgpLDgpL/gpKrgpYvgpLDgpY3gpJ/gpLgg4KSU4KSwIOCkheCkuOCljeCkquCkpOCkvuCksiDgpKzgpL/gpLIiKQoKc3Quc2lkZWJhci5oZWFkZXIoIuKal++4jyDgpLjgpYfgpJ/gpL/gpILgpJfgpY3gpLgiKQphcGlfa2V5ID0gc3Quc2lkZWJhci50ZXh0X2lucHV0KCLgpIXgpKrgpKjgpYAgR2VtaW5pIEFQSSBLZXkg4KSh4KS+4KSy4KWH4KSCOiIsIHR5cGU9InBhc3N3b3JkIikKc3Quc2lkZWJhci5pbmZvKCJDcmVhdG9yOiBTaGFpbGVuZHJhIEt1bWFyIFNpbmdoIikKCmRlZiBydW5fYWkoa2V5LCBpbWcsIHBybSk6CiAgICBjbGllbnQgPSBnZW5haS5DbGllbnQoYXBpX2tleT1rZXkpCiAgICBpbWdfY29weSA9IGltZy5jb3B5KCkKICAgIGltZ19jb3B5LnRodW1ibmFpbCgoMTAyNCwgMTAyNCkpCiAgICBtb2RlbHMgPSBsaXN0KCgiZ2VtaW5pLTIuNS1mbGFzaCIsICJnZW1pbmktMi41LWZsYXNoLWxpdGUiLCAiZ2VtaW5pLTIuNS1wcm8iKSkKICAgIGVyciA9ICIiCiAgICBmb3IgbW4gaW4gbW9kZWxzOgogICAgICAgIHRyeToKICAgICAgICAgICAgcmVzID0gY2xpZW50Lm1vZGVscy5nZW5lcmF0ZV9jb250ZW50KG1vZGVsPW1uLCBjb250ZW50cz1saXN0KChpbWdfY29weSwgcHJtKSkpCiAgICAgICAgICAgIGlmIHJlcyBhbmQgcmVzLnRleHQ6CiAgICAgICAgICAgICAgICByZXR1cm4gcmVzLnRleHQsIG1uCiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICBlcnIgPSBzdHIoZSkKICAgIHJhaXNlIEV4Y2VwdGlvbihlcnIpCgp1cCA9IHN0LmZpbGVfdXBsb2FkZXIoIuCkquCksOCljeCkmuClhyDgpK/gpL4g4KSs4KS/4KSyIOCkleClgCDgpKvgpYvgpJ/gpYsg4KSF4KSq4KSy4KWL4KShIOCkleCksOClh+CkgiwgdHlwZT0oImpwZyIsICJqcGVnIiwgInBuZyIpKQppZiB1cCBpcyBub3QgTm9uZToKICAgIGltZyA9IEltYWdlLm9wZW4odXApCiAgICBzdC5pbWFnZShpbWcsIHdpZHRoPSJzdHJldGNoIikKICAgIGlmIHN0LmJ1dHRvbigi8J+UjSDgpJzgpL7gpILgpJog4KS24KWB4KSw4KWC4KSCINCUKSV4KSw4KWH4KSCIik6CiAgICAgICAgaWYgbm90IGFwaV9rZXk6CiAgICAgICAgICAgIHN0LmVycm9yKCLgpJXgpYPgpKrgpK/gpL4g4KSq4KS54KSy4KWHIEFQSSBLZXkg4KSh4KS+4KSy4KWH4KSCIikKICAgICAgICBlbHNlOgogICAgICAgICAgICB3aXRoIHN0LnNwaW5uZXIoIuCknOCkvuCkguCkmiDgpJrgpLIg4KSw4KS54KWAIOCkueCliC4uLiIpOgogICAgICAgICAgICAgICAgdHJ5OgogICAgICAgICAgICAgICAgICAgIHAgPSAi4KSG4KSqIOCkj+CklSDgpK3gpL7gpLDgpKTgpYfgpK8g4KSu4KWH4KSh4KS/4KSV4KSyIOCkrOCkv+CksiDgpKTgpL7gpKPgpY3gpJwg4KS54KWI4KWkIOCkh+CkuCDgpKvgpYvgpJ/gpYsg4KSV4KWLIOCloeCljeCkr+CkvuCkqCDgpLjgpYcg4KSq4KSi4KS84KWH4KSCINCU4KSwIOCkuOCksOCksiDgpLngpL/gpKjgpY3gpKbgpYAg4KSu4KWH4KSCIDQg4KSs4KS/4KSC4KSm4KWB4KST4KSCIOCkruClh+CkgiDgpLDgpL/gpKrgpYvgpLDgpY3gpJ8g4KSm4KWH4KSCIChSZXBvcnQpOiAxLiDgpKrgpLDgpY3gpJrgpYcg4KSV4KS+IOCkuOCkvuCksCAo4KSV4KWM4KSoIOCkuOCkviDgpKHgpYngpJXgpY3gpJ/gpLAg4KS54KWIINCU4KSwIOCkleCljOCkqCDgpLjgpYAg4KSm4KS14KS+4KS/4KSv4KS+4KSCIC/gpJ/gpYfgpLjgpY3gpJ8g4KS54KWI4KSCKT8gMi4g4KS44KS44KWN4KSk4KWHIOCknOClh+CkqOClh+CksOCljeCkv+CklSDgpLXgpL/gpJXgpLLgpY3gpKogKOCkheCkuOCksuClgCDgpLjgpYngpLLgpY3gpJ8g4KSU4KSwIOCknOCkqCDgpJTgpYzgpLfgpKfgpL8g4KSV4KWH4KSo4KWN4KSm4KWN4KSwIOCksOClh+CknikgMy4g4KSs4KS/4KSyL+CkleCksOCljeCknCDgpJXgpYAg4KSc4KS+4KSC4KSaICjgpJXgpY3gpK/gpL4g4KSV4KWL4KSHIOCkmuCkvuCksOCljeCknCDgpJzgpY3gpK/gpL7gpKbgpL4gT3ZlcnByaWNlZCDgpLngpYg/KSA0LiDgpLjgpLDgpJXgpL7gpLDgpYAg4KSv4KWL4KSc4KSo4KS+ICjgpIbgpK/gpYHgpLfgpY3gpK7gpL7gpKgg4KSt4KS+4KSw4KSPIFBNLUpBWSkg4KS44KS54KS+4KSv4KSk4KS+LiDgpIXgpILgpKQg4KSu4KWH4KSCINCa4KWH4KSk4KS+4KS14KSo4KWAIOCksuCkv+CkluClh+CkgiDgpJXgpL8g4KSm4KS14KS+IOCkrOCkpuCksuCkqOClh+CkuOClh+CkquCkueCksuClh+CkoeClieCkleCljeCkn+CksOCkuOClh+CquClguCkm+Clh+CkgiIKICAgICAgICAgICAgICAgICAgICB0eHQsIG1kbCA9IHJ1bl9haShhcGlfa2V5LCBpbWcsIHApCiAgICAgICAgICAgICAgICAgICAgc3Quc3VjY2VzcyhmIuKchSDgpLXgpL/gpLbgpYfgpLfgpKPgpL4g4KSq4KWC4KSw4KS+ISggKHttZGx9KSIpCiAgICAgICAgICAgICAgICAgICAgc3QubWFya2Rvd24odHh0KQogICAgICAgICAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICAgICAgICAgIHN0LmVycm9yKGYi8J+boO+4jyDgpKTgpY3gpLDgpYHgpJ/gpL86IHtlfSIpCgpzdC5tYXJrZG93bigiLS0tIikKc3QubWFya2Rvd24oIjxjZW50ZXI+8J+PpSA8Yj5NYWxpayBNZWRpR3VhcmQgQUk8L2I+IHwgQ3JlYXRlZCBieSA8Yj5TaGFpbGVuZHJhIEt1bWFyIFNpbmdoPC9iPjwvY2VudGVyPiIsIHVuc2FmZV9hbGxvd19odG1sPVRydWUpCg=="
-exec(base64.b64decode(code).decode("utf-8"))
+import streamlit as st
+from google import genai
+from PIL import Image
+
+st.set_page_config(page_title="Malik MediGuard AI", page_icon="🏥")
+st.title("🏥 Malik MediGuard AI")
+st.subheader("डॉक्टर के पर्चे और मेडिकल बिल की असली जांच करें")
+st.caption("Created by: Shailendra Kumar Singh | Superfast AI")
+
+st.info("📋 यह टूल जनरल फिजिशियन, हार्ट, हड्डी, बच्चों, महिला, स्किन, डेंटल, आयुर्वेद, होम्योपैथी के पर्चे और लैब/अस्पताल बिल पढ़ सकता है।")
+
+api_key = st.sidebar.text_input("अपनी Gemini API Key डालें:", type="password")
+st.sidebar.write("Creator: Shailendra Kumar Singh")
+
+up = st.file_uploader("यहाँ डॉक्टर के पर्चे या दवा की फोटो अपलोड करें", type=("jpg", "jpeg", "png"))
+
+if up is not None:
+    img = Image.open(up)
+    st.image(img, width="stretch")
+    if st.button("🔍 जांच शुरू करें और बचत देखें"):
+        if not api_key:
+            st.error("कृपया पहले बाईं तरफ (>>) अपनी Gemini API Key डालें!")
+        else:
+            with st.spinner("Malik MediGuard AI जांच कर रहा है..."):
+                try:
+                    small_img = img.copy()
+                    small_img.thumbnail((1024, 1024))
+                    client = genai.Client(api_key=api_key)
+                    prompt = "आप एक भारतीय मेडिकल बिल और जेनेरिक दवा विशेषज्ञ हैं। इस फोटो को पढ़कर सरल हिंदी में 4 पॉइंट्स में रिपोर्ट दें: 1. दवा या पर्चे का सार, 2. सस्ते जेनेरिक (जन औषधि) विकल्प और बचत, 3. बिल/रेट की जांच, 4. आयुष्मान भारत या सरकारी योजना की मदद। अंत में डॉक्टर से सलाह लेने की चेतावनी लिखें।"
+                    res = client.models.generate_content(model="gemini-2.5-flash", contents=list((small_img, prompt)))
+                    st.success("✅ विश्लेषण पूरा हुआ!")
+                    st.markdown(res.text)
+                except Exception as e:
+                    st.error(f"त्रुटि: {e}")
+
+st.markdown("---")
+st.write("🏥 Malik MediGuard AI | Created by Shailendra Kumar Singh")
  
