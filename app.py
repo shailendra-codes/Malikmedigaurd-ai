@@ -1,3 +1,4 @@
+import time
 import streamlit as st
 from google import genai
 from PIL import Image
@@ -5,7 +6,7 @@ from PIL import Image
 st.set_page_config(page_title="Malik MediGuard AI", page_icon="🏥")
 st.title("🏥 Malik MediGuard AI")
 st.subheader("डॉक्टर के पर्चे और मेडिकल बिल की असली जांच करें")
-st.caption("Created by: Shailendra Kumar Singh | 🛡️ Smart Backup AI")
+st.caption("Created by: Shailendra Kumar Singh | 🛡️ Auto-Retry AI")
 
 default_key = st.secrets.get("GEMINI_API_KEY", "")
 api_key = st.sidebar.text_input("अपनी Gemini API Key डालें:", value=default_key, type="password")
@@ -19,7 +20,7 @@ if st.button("🔍 जांच शुरू करें और बचत द�
     elif not med_text and up is None:
         st.warning("कृपया ऊपर दवा का नाम लिखें या नीचे फोटो अपलोड करें!")
     else:
-        with st.spinner("Malik MediGuard AI जांच कर रहा है..."):
+        with st.spinner("Malik MediGuard AI जांच कर रहा है (कृपया 5-10 सेकंड रुकें)..."):
             client = genai.Client(api_key=api_key)
             prompt = f"आप एक भारतीय मेडिकल बिल और जेनेरिक दवा विशेषज्ञ हैं। इस जानकारी/फोटो ({med_text}) को पढ़कर सरल हिंदी में 4 पॉइंट्स में रिपोर्ट दें: 1. दवा या पर्चे का सार, 2. सस्ते जेनेरिक (जन औषधि) विकल्प और बचत, 3. रेट/बिल की जांच, 4. आयुष्मान भारत या सरकारी योजना की मदद। अंत में डॉक्टर से सलाह लेने की चेतावनी लिखें।"
             items = list((prompt,))
@@ -27,18 +28,31 @@ if st.button("🔍 जांच शुरू करें और बचत द�
                 img = Image.open(up)
                 img.thumbnail((800, 800))
                 items.append(img)
+            models_to_try = list(("gemini-3.8-flash", "gemini-2.5-flash", "gemini-2.0-flash"))
+            try:
+                for m in client.models.list():
+                    name = m.name.replace("models/", "")
+                    if "gemini" in name and "flash" in name and name not in models_to_try:
+                        models_to_try.append(name)
+            except Exception:
+                pass
             done = False
-            for m in ("gemini-3.8-flash-lite", "gemini-3.8-flash", "gemini-3.8-pro"):
-                try:
-                    res = client.models.generate_content(model=m, contents=items)
-                    st.success(f"✅ विश्लेषण पूरा हुआ! (इंजन: {m})")
-                    st.markdown(res.text)
-                    done = True
+            last_err = ""
+            for step in range(4):
+                for m in models_to_try:
+                    try:
+                        res = client.models.generate_content(model=m, contents=items)
+                        st.success(f"✅ विश्लेषण पूरा हुआ! (इंजन: {m})")
+                        st.markdown(res.text)
+                        done = True
+                        break
+                    except Exception as e:
+                        last_err = str(e)
+                if done:
                     break
-                except Exception as e:
-                    last_err = str(e)
+                time.sleep(2)
             if not done:
-                st.error(f"सभी सर्वर अभी व्यस्त हैं, कृपया 10 सेकंड बाद प्रयास करें: {last_err}")
+                st.error(f"सर्वर पर अभी बहुत ज़्यादा भीड़ है, कृपया थोड़ी देर बाद प्रयास करें: {last_err}")
 
 st.markdown("---")
 st.write("🏥 Malik MediGuard AI | Created by Shailendra Kumar Singh")
